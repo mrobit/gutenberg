@@ -185,7 +185,7 @@ characters. */
 					>
 						{ () => (
 							<div className="edit-post-header__dropdown">
-								<MenuGroup label={ __( 'Modes' ) }>
+								<MenuGroup label={ __( 'Tools' ) }>
 									<MenuItemsChoice
 										value={
 											isNavigationTool ? 'select' : 'edit'
