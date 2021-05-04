@@ -34,6 +34,13 @@
 		},
 		"kind": {
 			"type": "string"
+		},
+		"suggestions": {
+			"type": "array",
+			"items": {
+				"type": "object"
+			},
+			"default": []
 		}
 	},
 	"usesContext": [

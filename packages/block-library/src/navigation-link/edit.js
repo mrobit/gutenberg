@@ -152,6 +152,7 @@ export default function NavigationLinkEdit( {
 		rel,
 		title,
 		kind,
+		suggestions = [],
 	} = attributes;
 	const link = {
 		url,
@@ -373,6 +374,22 @@ export default function NavigationLinkEdit( {
 			missingText = __( 'Add a link' );
 	}
 
+	const fetchCustomItemTypeSuggestions = ( val ) => {
+		return Promise.resolve(
+			suggestions
+				.filter(
+					( item ) =>
+						val === '' || item.title.match( new RegExp( val, 'i' ) )
+				)
+				.map( ( item ) => ( {
+					id: item.id,
+					title: item.title,
+					url: item.url,
+					type: 'URL',
+				} ) )
+		);
+	};
+
 	return (
 		<Fragment>
 			<BlockControls>
@@ -493,7 +510,11 @@ export default function NavigationLinkEdit( {
 								className="wp-block-navigation-link__inline-link-input"
 								value={ link }
 								showInitialSuggestions={ true }
-								withCreateSuggestion={ userCanCreate }
+								withCreateSuggestion={
+									suggestions.length > 0
+										? false
+										: userCanCreate
+								}
 								createSuggestion={ handleCreate }
 								createSuggestionButtonText={ ( searchTerm ) => {
 									let format;
@@ -519,6 +540,11 @@ export default function NavigationLinkEdit( {
 									type,
 									kind
 								) }
+								fetchSuggestions={
+									suggestions.length > 0
+										? fetchCustomItemTypeSuggestions
+										: null
+								}
 								onChange={ ( {
 									title: newTitle = '',
 									url: newURL = '',
